@@ -304,13 +304,14 @@ bool UsbInputProvider::close()
 using namespace depth;
 
 static bool s_lookupTableInited = false;
-static QColor s_lookupTable[330];
+static QColor s_lookupTable[350];
 
 DepthInputProvider::DepthInputProvider(){
 	if(!s_lookupTableInited){
 		for(unsigned short i = 0; i < 330; i++){
 			s_lookupTable[i] = QColor::fromHsv(i, 255, 255);
 		}
+		s_lookupTable[0] = 0;
 		s_lookupTableInited = true;
 	}
 }
