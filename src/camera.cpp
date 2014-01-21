@@ -128,7 +128,7 @@ ChannelImpl *DefaultChannelImplManager::channelImpl(const std::string &name)
 	return (it == m_channelImpls.end()) ? 0 : it->second;
 }
 
-Camera::Channel::Channel(Device *device, const Config &config) : m_device(device), m_config(config), m_impl(0),
+Camera::Channel::Channel(Device *device, const Config &config)
 	: m_device(device),
 	m_config(config),
 	m_impl(0),
