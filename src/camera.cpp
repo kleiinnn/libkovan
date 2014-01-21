@@ -315,7 +315,7 @@ DepthInputProvider::DepthInputProvider(){
 	}
 }
 
-DepthInputProvider::DepthInputProvider~(){
+DepthInputProvider::~DepthInputProvider(){
 
 }
 
