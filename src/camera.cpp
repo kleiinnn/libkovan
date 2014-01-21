@@ -127,13 +127,7 @@ ChannelImpl *DefaultChannelImplManager::channelImpl(const std::string &name)
 	std::map<std::string, ChannelImpl *>::iterator it = m_channelImpls.find(name);
 	return (it == m_channelImpls.end()) ? 0 : it->second;
 }
-
-// Channel //
-
-Camera::Channel::Channel(Device *device, const Config &config)
-	: m_device(device),
-	m_config(config),
-	m_impl(0),
+// Channel // Camera::Channel::Channel(Device *device, const Config &config) : m_device(device), m_config(config), m_impl(0),
 	m_valid(false)
 {
 	m_objects.clear();
@@ -300,6 +294,67 @@ bool UsbInputProvider::close()
 	if(!m_capture || !m_capture->isOpened()) return false;
 	m_capture->release();
 	return true;
+}
+
+
+using namespace depth;
+
+static bool s_tableInited = false;
+static QColor s_lookupTable[330];
+
+DepthInputProvider::DepthInputProvider(){
+	if(!s_lookupTableInited){
+		for(unsigned short i = 0; i < 330; i++){
+			s_lookupTable[i] = QColor::fromHsv(i, 255, 255);
+		}
+		s_lookupTableInited = true;
+	}
+}
+
+DepthInputProvider::DepthInputProvider~(){
+
+}
+
+bool DepthInputProvider::open(const int number){
+	DepthDriver::instance().open();
+	return DepthDriver::instance().isOpen();	
+}
+
+bool DepthInputProvider::isOpen() const{
+	return DepthDriver::instance().isOpen();
+}
+
+void DepthInputProvider::setWidth(const unsigned width){
+}
+
+void DepthInputProvider::setHeight(const unsigned height){
+}
+
+bool DepthInputProvider::next(cv::Mat &image){
+	//where magic happens
+	if(DepthDriver::instance().isOpen()){
+		DepthImage* depthImage = DepthDriver::instance().depthImage();
+		image = cv::Mat(320, 240, CV_8UC3);
+		for(int row = 0; row < image.rows; ++row) {
+			uchar* p = image.ptr(row);
+			for(int col = 0; col < image.cols; ++col) {
+				uint16_t depth = depthImage->depthAt(row, col) - 500;
+				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
+				p[col] = s_lookupTable[hsv].blue();
+				p[col + 1] = s_lookupTable[hsv].red();
+				p[col + 2] = s_lookupTable[hsv].green();
+				
+			}
+		}	
+	}
+	else{
+		return false;
+	}
+}
+
+bool DepthInputProvider::close(){
+	DepthDriver::instance().close();
+	return ! DepthDriver::instance().isOpen();
 }
 
 // Device //

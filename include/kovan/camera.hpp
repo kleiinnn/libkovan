@@ -38,6 +38,8 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include "depth_driver.hpp"
+#include <QColor>
 
 #ifndef WIN32
 #include <sys/time.h>
@@ -203,6 +205,20 @@ namespace Camera
 	private:
 		cv::VideoCapture *m_capture;
 	};
+
+	class DepthInputProvider : public Camera::InputProvider {
+	public:
+		DepthInputProvider();
+		~DepthInputProvider();
+
+		virtual bool open(const int number);
+		virtual bool isOpen() const;
+		virtual void setWidth(const unsigned width);
+		virtual void setHeight(const unsigned height);
+		virtual bool next(cv::Mat &image);
+		virtual bool close();
+	};
+
 	
 	class EXPORT_SYM Device
 	{
