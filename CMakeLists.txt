@@ -5,7 +5,8 @@
 project(libkovan)
 
 cmake_minimum_required(VERSION 2.8.0)
-
+find_package(Qt4 REQUIRED)
+include(${QT_USE_FILE})
 set(INCLUDE ${libkovan_SOURCE_DIR}/include)
 set(SRC ${libkovan_SOURCE_DIR}/src)
 set(PIXELTOASTER ${SRC}/pixeltoaster)
@@ -74,7 +75,7 @@ if(WIN32)
 	target_link_libraries(kovan opencv_core300 opencv_highgui300 opencv_imgproc300 libzbar-0 OpenNI2)
 	target_link_libraries(kovan d3d9)
 else()
-  target_link_libraries(kovan pthread opencv_core opencv_highgui opencv_imgproc zbar avcodec avformat avutil z swscale bz2 OpenNI2)
+  target_link_libraries(kovan pthread opencv_core opencv_highgui opencv_imgproc zbar avcodec avformat avutil z swscale bz2 OpenNI2 ${QT_LIBRARIES})
 endif()
 
 if(APPLE)
