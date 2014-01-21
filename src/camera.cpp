@@ -303,7 +303,7 @@ bool UsbInputProvider::close()
 
 using namespace depth;
 
-static bool s_tableInited = false;
+static bool s_lookupTableInited = false;
 static QColor s_lookupTable[330];
 
 DepthInputProvider::DepthInputProvider(){
