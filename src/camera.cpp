@@ -342,7 +342,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 		try {
                 	DepthDriver::instance().open();
         	} catch(...) {}
-		if(!DepthDriver::instance()){
+		if(!DepthDriver::instance().isOpen()){
 			return false;
 		}
 	}
