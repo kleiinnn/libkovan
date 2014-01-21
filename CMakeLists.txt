@@ -10,7 +10,7 @@ set(INCLUDE ${libkovan_SOURCE_DIR}/include)
 set(SRC ${libkovan_SOURCE_DIR}/src)
 set(PIXELTOASTER ${SRC}/pixeltoaster)
 
-include_directories(${INCLUDE})
+include_directories(${INCLUDE} ${CMAKE_SOURCE_DIR})
 
 file(GLOB INCLUDES ${INCLUDE}/kovan/*.h ${INCLUDE}/kovan/*.hpp)
 file(GLOB SOURCES ${SRC}/*.cpp ${PIXELTOASTER}/*.cpp)
