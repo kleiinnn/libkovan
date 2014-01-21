@@ -127,7 +127,11 @@ ChannelImpl *DefaultChannelImplManager::channelImpl(const std::string &name)
 	std::map<std::string, ChannelImpl *>::iterator it = m_channelImpls.find(name);
 	return (it == m_channelImpls.end()) ? 0 : it->second;
 }
-// Channel // Camera::Channel::Channel(Device *device, const Config &config) : m_device(device), m_config(config), m_impl(0),
+
+Camera::Channel::Channel(Device *device, const Config &config) : m_device(device), m_config(config), m_impl(0),
+	: m_device(device),
+	m_config(config),
+	m_impl(0),
 	m_valid(false)
 {
 	m_objects.clear();
