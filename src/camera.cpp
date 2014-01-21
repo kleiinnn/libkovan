@@ -311,7 +311,6 @@ DepthInputProvider::DepthInputProvider(){
 		for(unsigned short i = 0; i < 330; i++){
 			s_lookupTable[i] = QColor::fromHsv(i, 255, 255);
 		}
-		s_lookupTable[0] = 0;
 		s_lookupTableInited = true;
 	}
 }
@@ -321,7 +320,9 @@ DepthInputProvider::~DepthInputProvider(){
 }
 
 bool DepthInputProvider::open(const int number){
-	DepthDriver::instance().open();
+	try {
+      		DepthDriver::instance().open();	
+    	} catch(...) {}	
 	return DepthDriver::instance().isOpen();	
 }
 
@@ -337,7 +338,15 @@ void DepthInputProvider::setHeight(const unsigned height){
 
 bool DepthInputProvider::next(cv::Mat &image){
 	//where magic happens
-	if(DepthDriver::instance().isOpen()){
+	if(!DepthDriver::instance().isOpen()){
+		try {
+                	DepthDriver::instance().open();
+        	} catch(...) {}
+		if(!DepthDriver::instance()){
+			return false;
+		}
+	}
+	else {	
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		image = cv::Mat(320, 240, CV_8UC3);
 		for(int row = 0; row < image.rows; ++row) {
@@ -348,13 +357,10 @@ bool DepthInputProvider::next(cv::Mat &image){
 				p[col] = s_lookupTable[hsv].blue();
 				p[col + 1] = s_lookupTable[hsv].red();
 				p[col + 2] = s_lookupTable[hsv].green();
-				
 			}
-		}	
+		}
 	}
-	else{
-		return false;
-	}
+	return true;
 }
 
 bool DepthInputProvider::close(){
