@@ -353,7 +353,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 			for(int col = 0; col < image.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
 				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
-				p[col] = s_lookupTable[].blue();
+				p[col] = s_lookupTable[hsv].blue();
 				p[col + 1] = s_lookupTable[hsv].red();
 				p[col + 2] = s_lookupTable[hsv].green();
 			}
@@ -369,8 +369,8 @@ bool DepthInputProvider::close(){
 
 // Device //
 
-Camera::Device::Device(InputProvider *const inputProvider)
-	: m_inputProvider(inputProvider),
+	Camera::Device::Device(InputProvider *const inputProvider)
+: m_inputProvider(inputProvider),
 	m_channelImplManager(new DefaultChannelImplManager),
 	m_bgr(0),
 	m_image(320, 240, CV_8UC3),
