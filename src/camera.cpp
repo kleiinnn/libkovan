@@ -348,7 +348,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 	}
 	else {	
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
-		//image = cv::Mat(320, 240, CV_8UC3);
+		image(320, 240, CV_8UC3);
 		for(int row = 0; row < image.rows; ++row) {
 			uchar* p = image.ptr(row);
 			for(int col = 0; col < image.cols; ++col) {
