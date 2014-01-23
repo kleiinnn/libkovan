@@ -356,6 +356,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 			for(int col = 0; col < img.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
 				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
+				images[0].row(row)[col]
 				p[col][0] = s_lookupTable[hsv].blue();
 				p[col][1] = s_lookupTable[hsv].red();
 				p[col][2] = s_lookupTable[hsv].green();
