@@ -393,6 +393,7 @@ bool DepthInputProvider::close(){
 : m_inputProvider(inputProvider),
 	m_channelImplManager(new DefaultChannelImplManager),
 	m_bgr(0),
+	m_image(320, 240, CV_8UC3),
 	m_bgrSize(0)
 {
 	Config *config = Config::load(Camera::ConfigPath::defaultConfigPath());
