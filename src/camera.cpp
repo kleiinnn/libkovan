@@ -10,7 +10,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 using namespace Camera;
-
+using namespace std;
 // Object //
 
 Camera::Object::Object(const Point2<unsigned> &centroid,
