@@ -367,6 +367,7 @@ bool DepthInputProvider::next(cv::Mat &image){
                 	(*it)[1] = 20;
                 	(*it)[2] = 100;
             	}
+		image = img.clone();
 	//
 	}
 	return true;
