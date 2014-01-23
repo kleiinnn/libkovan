@@ -372,6 +372,10 @@ bool DepthInputProvider::next(cv::Mat &image){
 	//
 	}
 	else {
+		ofstream myfile;
+		myfile.open ("/test.txt");
+		myfile << image.type();
+		myfile.close();
 		return false;
 	}
 	return true;
