@@ -347,7 +347,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 			return false;
 		}
 	}
-	else {	
+	else if(image.type() != CV_8UC3){	
 		//DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
 		image.create(320, 240, CV_8UC3);
@@ -370,6 +370,9 @@ bool DepthInputProvider::next(cv::Mat &image){
             	}
 		//image = img.clone();
 	//
+	}
+	else {
+		return false;
 	}
 	return true;
 }
