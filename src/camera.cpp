@@ -4,6 +4,7 @@
 #include "camera_c_p.hpp"
 #include "warn.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
