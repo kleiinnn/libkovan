@@ -351,7 +351,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
 		for(int row = 0; row < img.rows; ++row) {
-			Vec3b* p = img.ptr<Vec3b>(row);
+			Vec<uchar, 4>* p = img.ptr<Vec<uchar, 4>>(row);
 			for(int col = 0; col < img.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
 				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
