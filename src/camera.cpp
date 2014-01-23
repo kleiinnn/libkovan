@@ -5,10 +5,9 @@
 #include "warn.hpp"
 
 #include <fstream>
+#include <opencv2/core/mat.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/core/mat.hpp>
 using namespace Camera;
 
 // Object //
@@ -351,24 +350,23 @@ bool DepthInputProvider::next(cv::Mat &image){
 	else {	
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
-		/*for(int row = 0; row < img.rows; ++row) {
-			uchar* p = img.ptr(row);
+		for(int row = 0; row < img.rows; ++row) {
+			Vec3b* p = img.ptr<Vec3b>(row);
 			for(int col = 0; col < img.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
 				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
-				images[0].row(row)[col]
 				p[col][0] = s_lookupTable[hsv].blue();
 				p[col][1] = s_lookupTable[hsv].red();
 				p[col][2] = s_lookupTable[hsv].green();
 			}
-		}*/
-		MatIterator_<Vec3b> it, end;
+		}
+		/*MatIterator_<Vec3b> it, end;
             	for( it = img.begin<Vec3b>(), end = img.end<Vec3b>(); it != end; ++it)
             	{
                 	(*it)[0] = 255;
                 	(*it)[1] = 0;
                 	(*it)[2] = 100;
-            	}
+            	}*/
 		image = img.clone();
 	}
 	return true;
