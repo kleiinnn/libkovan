@@ -353,12 +353,12 @@ bool DepthInputProvider::next(cv::Mat &image){
 		cv::Mat img(320, 240, CV_8UC3);
 		for(int row = 0; row < img.rows; ++row) {
 			uchar* p = img.ptr(row);
-			for(int col = 0; col < img.cols * 3; ++col) {
+			for(int col = 0; col < img.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
 				uint16_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
-				p[col] = s_lookupTable[hsv].blue();
-				p[col + 1] = s_lookupTable[hsv].red();
-				p[col + 2] = s_lookupTable[hsv].green();
+				p[col][0] = s_lookupTable[hsv].blue();
+				p[col][1] = s_lookupTable[hsv].red();
+				p[col][2] = s_lookupTable[hsv].green();
 			}
 		}
 		/*MatIterator_<Vec3b> it, end;
