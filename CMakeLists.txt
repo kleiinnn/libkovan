@@ -75,7 +75,7 @@ if(WIN32)
 	target_link_libraries(kovan opencv_core300 opencv_highgui300 opencv_imgproc300 libzbar-0 OpenNI2)
 	target_link_libraries(kovan d3d9)
 else()
-  target_link_libraries(kovan pthread opencv_core opencv_highgui opencv_imgproc zbar avcodec avformat avutil z swscale bz2 OpenNI2 ${QT_LIBRARIES})
+  target_link_libraries(kovan pthread opencv_core opencv_highgui opencv_imgproc zbar avcodec avformat avutil z swscale bz2 OpenNI2 QtCore QtGui)
 endif()
 
 if(APPLE)
