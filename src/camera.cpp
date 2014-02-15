@@ -354,19 +354,20 @@ bool DepthInputProvider::next(cv::Mat &image){
 		image.create(320, 240, CV_8UC3);
 		ofstream myfile;
                 myfile.open ("/asdf.txt");
-                myfile << img.type();
-                myfile.close();
+                myfile << img.type() << "\n";
 
 		for(int row = 0; row < img.rows; ++row) {
 			cv::Vec3b* p = img.ptr<cv::Vec3b>(row);
 			for(int col = 0; col < img.cols; ++col) {
-				//uint16_t depth = depthImage->depthAt(row, col) - 500;
-				uint16_t hsv = 200; //qMax(qMin(330, (depth * 330) >> 12), 0);
+				uint32_t depth = depthImage->depthAt(row, col) - 500;
+				myfile << depth << "\n";
+				uint32_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
 				p[col][0] = s_lookupTable[hsv].blue();
 				p[col][1] = s_lookupTable[hsv].red();
 				p[col][2] = s_lookupTable[hsv].green();
 			}
 		}
+                myfile.close();
 		/*cv::MatIterator_<cv::Vec3b> it, end;
             	for( it = image.begin<cv::Vec3b>(), end = image.end<cv::Vec3b>(); it != end; ++it)
             	{
