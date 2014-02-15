@@ -348,8 +348,8 @@ bool DepthInputProvider::next(cv::Mat &image){
 			return false;
 		}
 	}
-	else if(true){	
-		//DepthImage* depthImage = DepthDriver::instance().depthImage();
+	else{	
+		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
 		image.create(320, 240, CV_8UC3);
 		ofstream myfile;
@@ -376,13 +376,6 @@ bool DepthInputProvider::next(cv::Mat &image){
             	}*/
 		image = img.clone();
 	//
-	}
-	else {
-		ofstream myfile;
-		myfile.open ("/test.txt");
-		myfile << image.type();
-		myfile.close();
-		return false;
 	}
 	return true;
 }
