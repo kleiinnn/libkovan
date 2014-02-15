@@ -313,6 +313,7 @@ DepthInputProvider::DepthInputProvider(){
 		for(unsigned short i = 0; i < 330; i++){
 			s_lookupTable[i] = QColor::fromHsv(i, 255, 255);
 		}
+		s_lookupTable[0] = QColor::fromRgb(0, 0, 0);
 		s_lookupTableInited = true;
 	}
 }
@@ -352,22 +353,16 @@ bool DepthInputProvider::next(cv::Mat &image){
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
 		image.create(320, 240, CV_8UC3);
-		ofstream myfile;
-                myfile.open ("/asdf.txt");
-                myfile << img.type() << "\n";
-
 		for(int row = 0; row < img.rows; ++row) {
 			cv::Vec3b* p = img.ptr<cv::Vec3b>(row);
 			for(int col = 0; col < img.cols; ++col) {
-				int32_t depth = depthImage->depthAt(row, col) - 500;
-				myfile << depth << "\n";
+				int32_t depth = (int32_t)depthImage->depthAt(row, col) - 500;
 				int32_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
 				p[col][0] = s_lookupTable[hsv].blue();
 				p[col][1] = s_lookupTable[hsv].red();
 				p[col][2] = s_lookupTable[hsv].green();
 			}
 		}
-                myfile.close();
 		/*cv::MatIterator_<cv::Vec3b> it, end;
             	for( it = image.begin<cv::Vec3b>(), end = image.end<cv::Vec3b>(); it != end; ++it)
             	{
