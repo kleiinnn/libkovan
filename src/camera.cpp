@@ -351,12 +351,14 @@ bool DepthInputProvider::next(cv::Mat &image){
 	}
 	else{	
 		DepthImage* depthImage = DepthDriver::instance().depthImage();
-		cv::Mat img(240, 320, CV_8UC3);
-		image.create(240, 320, CV_8UC3);
+		//cv::Mat img(240, 320, CV_8UC3);
+		cv::Mat img(120, 160, CV_8UC3);
+		//image.create(240, 320, CV_8UC3);
+		image.create(120, 160, CV_8UC3);
 		for(int row = 0; row < img.rows; ++row) {
 			cv::Vec3b* p = img.ptr<cv::Vec3b>(row);
 			for(int col = 0; col < img.cols; ++col) {
-				int32_t depth = (int32_t)depthImage->depthAt(row, col) - 500;
+				int32_t depth = (int32_t)depthImage->depthAt(row * 2, col * 2) - 500;
 				int32_t hsv = qMax(qMin(330, (depth * 330) >> 12), 0);
 				p[col][0] = s_lookupTable[hsv].blue();
 				p[col][1] = s_lookupTable[hsv].red();
