@@ -349,7 +349,7 @@ bool DepthInputProvider::next(cv::Mat &image){
 		}
 	}
 	else if(true){	
-		//DepthImage* depthImage = DepthDriver::instance().depthImage();
+		DepthImage* depthImage = DepthDriver::instance().depthImage();
 		cv::Mat img(320, 240, CV_8UC3);
 		image.create(320, 240, CV_8UC3);
 		ofstream myfile;
@@ -357,7 +357,7 @@ bool DepthInputProvider::next(cv::Mat &image){
                 myfile << img.type();
                 myfile.close();
 
-		/*for(int row = 0; row < img.rows; ++row) {
+		for(int row = 0; row < img.rows; ++row) {
 			cv::Vec3b* p = img.ptr<cv::Vec3b>(row);
 			for(int col = 0; col < img.cols; ++col) {
 				uint16_t depth = depthImage->depthAt(row, col) - 500;
@@ -366,14 +366,14 @@ bool DepthInputProvider::next(cv::Mat &image){
 				p[col][1] = s_lookupTable[hsv].red();
 				p[col][2] = s_lookupTable[hsv].green();
 			}
-		}*/
-		cv::MatIterator_<cv::Vec3b> it, end;
+		}
+		/*cv::MatIterator_<cv::Vec3b> it, end;
             	for( it = image.begin<cv::Vec3b>(), end = image.end<cv::Vec3b>(); it != end; ++it)
             	{
                 	(*it)[0] = 200;
                 	(*it)[1] = 20;
                 	(*it)[2] = 100;
-            	}
+            	}*/
 		image = img.clone();
 	//
 	}
