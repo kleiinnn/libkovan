@@ -350,11 +350,11 @@ bool DepthInputProvider::next(cv::Mat &image){
 	}
 	else if(true){	
 		//DepthImage* depthImage = DepthDriver::instance().depthImage();
-		cv::Mat img(320, 240, cv::CV_8UC3);
-		image.create(320, 240, cv::CV_8UC3);
+		cv::Mat img(320, 240, CV_8UC3);
+		image.create(320, 240, CV_8UC3);
 		ofstream myfile;
                 myfile.open ("/asdf.txt");
-                myfile << image.type();
+                myfile << img.type();
                 myfile.close();
 
 		/*for(int row = 0; row < img.rows; ++row) {
